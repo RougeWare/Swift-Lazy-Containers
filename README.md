@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/rougeware/swift-lazy-patterns/badge)](https://www.codefactor.io/repository/github/rougeware/swift-lazy-patterns)
+
 # Swift Lazy Patterns #
 A few lazy patterns for Swift 5.1. Note that, if you are OK with the behavior of Swift's `lazy` keyword, you should use that. This is for [those who want very specific behaviors](https://stackoverflow.com/a/40847994/3939277):
 
