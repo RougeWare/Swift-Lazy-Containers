@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A3313EC122FBDAE500E52342 /* Swift_Lazy_Patterns.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3313EB822FBDAE500E52342 /* Swift_Lazy_Patterns.framework */; };
+		A3313EC122FBDAE500E52342 /* LazyContainers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3313EB822FBDAE500E52342 /* LazyContainers.framework */; };
 		A3313EC622FBDAE500E52342 /* LazyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3313EC522FBDAE500E52342 /* LazyTests.swift */; };
 		A3313EC822FBDAE500E52342 /* Swift_Lazy_Patterns.h in Headers */ = {isa = PBXBuildFile; fileRef = A3313EBA22FBDAE500E52342 /* Swift_Lazy_Patterns.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A39EC85D22FBDB6D0052A777 /* Lazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3313E8622FBB29A00E52342 /* Lazy.swift */; };
@@ -25,10 +25,10 @@
 
 /* Begin PBXFileReference section */
 		A3313E8622FBB29A00E52342 /* Lazy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Lazy.swift; path = ../../Lazy.swift; sourceTree = "<group>"; };
-		A3313EB822FBDAE500E52342 /* Swift_Lazy_Patterns.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Swift_Lazy_Patterns.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3313EB822FBDAE500E52342 /* LazyContainers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LazyContainers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3313EBA22FBDAE500E52342 /* Swift_Lazy_Patterns.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Swift_Lazy_Patterns.h; sourceTree = "<group>"; };
 		A3313EBB22FBDAE500E52342 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A3313EC022FBDAE500E52342 /* Swift-Lazy-PatternsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swift-Lazy-PatternsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3313EC022FBDAE500E52342 /* LazyContainersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazyContainersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3313EC522FBDAE500E52342 /* LazyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyTests.swift; sourceTree = "<group>"; };
 		A3313EC722FBDAE500E52342 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A39EC87122FFB44D0052A777 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3313EC122FBDAE500E52342 /* Swift_Lazy_Patterns.framework in Frameworks */,
+				A3313EC122FBDAE500E52342 /* LazyContainers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,8 +60,8 @@
 			children = (
 				A39EC87222FFB44E0052A777 /* LICENSE.txt */,
 				A39EC87122FFB44D0052A777 /* README.md */,
-				A3313EB922FBDAE500E52342 /* Swift-Lazy-Patterns */,
-				A3313EC422FBDAE500E52342 /* Swift-Lazy-PatternsTests */,
+				A3313EB922FBDAE500E52342 /* LazyContainers */,
+				A3313EC422FBDAE500E52342 /* LazyContainersTests */,
 				A3313E8D22FBB30D00E52342 /* Products */,
 				A3C890A72300B6F000B653C8 /* LazyContainers */,
 			);
@@ -70,29 +70,29 @@
 		A3313E8D22FBB30D00E52342 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A3313EB822FBDAE500E52342 /* Swift_Lazy_Patterns.framework */,
-				A3313EC022FBDAE500E52342 /* Swift-Lazy-PatternsTests.xctest */,
+				A3313EB822FBDAE500E52342 /* LazyContainers.framework */,
+				A3313EC022FBDAE500E52342 /* LazyContainersTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A3313EB922FBDAE500E52342 /* Swift-Lazy-Patterns */ = {
+		A3313EB922FBDAE500E52342 /* LazyContainers */ = {
 			isa = PBXGroup;
 			children = (
 				A3313E8622FBB29A00E52342 /* Lazy.swift */,
 				A3313EBA22FBDAE500E52342 /* Swift_Lazy_Patterns.h */,
 				A3313EBB22FBDAE500E52342 /* Info.plist */,
 			);
-			path = "Swift-Lazy-Patterns";
+			path = LazyContainers;
 			sourceTree = "<group>";
 		};
-		A3313EC422FBDAE500E52342 /* Swift-Lazy-PatternsTests */ = {
+		A3313EC422FBDAE500E52342 /* LazyContainersTests */ = {
 			isa = PBXGroup;
 			children = (
 				A3313EC522FBDAE500E52342 /* LazyTests.swift */,
 				A3313EC722FBDAE500E52342 /* Info.plist */,
 			);
-			path = "Swift-Lazy-PatternsTests";
+			path = LazyContainersTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,9 +109,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		A3313EB722FBDAE500E52342 /* Swift-Lazy-Patterns */ = {
+		A3313EB722FBDAE500E52342 /* LazyContainers */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A3313EC922FBDAE500E52342 /* Build configuration list for PBXNativeTarget "Swift-Lazy-Patterns" */;
+			buildConfigurationList = A3313EC922FBDAE500E52342 /* Build configuration list for PBXNativeTarget "LazyContainers" */;
 			buildPhases = (
 				A3313EB322FBDAE500E52342 /* Headers */,
 				A3313EB422FBDAE500E52342 /* Sources */,
@@ -122,14 +122,14 @@
 			);
 			dependencies = (
 			);
-			name = "Swift-Lazy-Patterns";
+			name = LazyContainers;
 			productName = "Swift-Lazy-Patterns";
-			productReference = A3313EB822FBDAE500E52342 /* Swift_Lazy_Patterns.framework */;
+			productReference = A3313EB822FBDAE500E52342 /* LazyContainers.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		A3313EBF22FBDAE500E52342 /* Swift-Lazy-PatternsTests */ = {
+		A3313EBF22FBDAE500E52342 /* LazyContainersTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A3313ECC22FBDAE500E52342 /* Build configuration list for PBXNativeTarget "Swift-Lazy-PatternsTests" */;
+			buildConfigurationList = A3313ECC22FBDAE500E52342 /* Build configuration list for PBXNativeTarget "LazyContainersTests" */;
 			buildPhases = (
 				A3313EBC22FBDAE500E52342 /* Sources */,
 				A3313EBD22FBDAE500E52342 /* Frameworks */,
@@ -140,9 +140,9 @@
 			dependencies = (
 				A3313EC322FBDAE500E52342 /* PBXTargetDependency */,
 			);
-			name = "Swift-Lazy-PatternsTests";
+			name = LazyContainersTests;
 			productName = "Swift-Lazy-PatternsTests";
-			productReference = A3313EC022FBDAE500E52342 /* Swift-Lazy-PatternsTests.xctest */;
+			productReference = A3313EC022FBDAE500E52342 /* LazyContainersTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -175,8 +175,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A3313EB722FBDAE500E52342 /* Swift-Lazy-Patterns */,
-				A3313EBF22FBDAE500E52342 /* Swift-Lazy-PatternsTests */,
+				A3313EB722FBDAE500E52342 /* LazyContainers */,
+				A3313EBF22FBDAE500E52342 /* LazyContainersTests */,
 			);
 		};
 /* End PBXProject section */
@@ -220,7 +220,7 @@
 /* Begin PBXTargetDependency section */
 		A3313EC322FBDAE500E52342 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A3313EB722FBDAE500E52342 /* Swift-Lazy-Patterns */;
+			target = A3313EB722FBDAE500E52342 /* LazyContainers */;
 			targetProxy = A3313EC222FBDAE500E52342 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -281,7 +281,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 26V9MK8TGP;
@@ -316,7 +316,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.bh.Swift-Lazy-Patterns";
+				PRODUCT_BUNDLE_IDENTIFIER = org.bh.LazyContainers;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -363,7 +363,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 26V9MK8TGP;
@@ -391,7 +391,7 @@
 				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.bh.Swift-Lazy-Patterns";
+				PRODUCT_BUNDLE_IDENTIFIER = org.bh.LazyContainers;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -554,7 +554,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A3313EC922FBDAE500E52342 /* Build configuration list for PBXNativeTarget "Swift-Lazy-Patterns" */ = {
+		A3313EC922FBDAE500E52342 /* Build configuration list for PBXNativeTarget "LazyContainers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A3313ECA22FBDAE500E52342 /* Debug */,
@@ -563,7 +563,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A3313ECC22FBDAE500E52342 /* Build configuration list for PBXNativeTarget "Swift-Lazy-PatternsTests" */ = {
+		A3313ECC22FBDAE500E52342 /* Build configuration list for PBXNativeTarget "LazyContainersTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A3313ECD22FBDAE500E52342 /* Debug */,

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A3313E8B22FBB30D00E52342"
-               BuildableName = "Swift_Lazy_Patterns.framework"
-               BlueprintName = "Swift-Lazy-Patterns"
+               BlueprintIdentifier = "A3313EB722FBDAE500E52342"
+               BuildableName = "LazyContainers.framework"
+               BlueprintName = "LazyContainers"
                ReferencedContainer = "container:Swift-Lazy-Patterns.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A3313E9422FBB30D00E52342"
-               BuildableName = "Swift-Lazy-PatternsTests.xctest"
-               BlueprintName = "Swift-Lazy-PatternsTests"
+               BlueprintIdentifier = "A3313EBF22FBDAE500E52342"
+               BuildableName = "LazyContainersTests.xctest"
+               BlueprintName = "LazyContainersTests"
                ReferencedContainer = "container:Swift-Lazy-Patterns.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -70,9 +70,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A3313E8B22FBB30D00E52342"
-            BuildableName = "Swift_Lazy_Patterns.framework"
-            BlueprintName = "Swift-Lazy-Patterns"
+            BlueprintIdentifier = "A3313EB722FBDAE500E52342"
+            BuildableName = "LazyContainers.framework"
+            BlueprintName = "LazyContainers"
             ReferencedContainer = "container:Swift-Lazy-Patterns.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
