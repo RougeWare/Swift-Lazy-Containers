@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Swift_Lazy_Patterns
+@testable import LazyContainers
 
 class LazyTests: XCTestCase {
     
