@@ -7,6 +7,8 @@
 //  Copyright BH-0-PD © 2019 - https://github.com/BlueHuskyStudios/Licenses/blob/master/Licenses/BH-0-PD.txt
 //
 
+import Foundation
+
 
 
 // MARK: - Supporting types
