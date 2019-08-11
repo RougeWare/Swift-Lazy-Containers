@@ -31,6 +31,8 @@
 		A3313EC022FBDAE500E52342 /* Swift-Lazy-PatternsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swift-Lazy-PatternsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3313EC522FBDAE500E52342 /* LazyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyTests.swift; sourceTree = "<group>"; };
 		A3313EC722FBDAE500E52342 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A39EC87122FFB44D0052A777 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A39EC87222FFB44E0052A777 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.txt; path = ../LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,8 @@
 		A3313E7E22FBB24300E52342 = {
 			isa = PBXGroup;
 			children = (
+				A39EC87222FFB44E0052A777 /* LICENSE.txt */,
+				A39EC87122FFB44D0052A777 /* README.md */,
 				A3313E8522FBB26400E52342 /* Source */,
 				A3313EB922FBDAE500E52342 /* Swift-Lazy-Patterns */,
 				A3313EC422FBDAE500E52342 /* Swift-Lazy-PatternsTests */,
