@@ -351,8 +351,8 @@ public struct FunctionalLazy<Value>: LazyContainer {
     }
     
     
-    /// Creates a non-resettable lazy container with the given value-initializer. That function will be called the very
-    /// first time a value is needed:
+    /// Creates a non-resettable lazy container (implemented with functions!) with the given value-initializer. That
+    /// function will be called the very first time a value is needed:
     ///
     ///   1. The first time `wrappedValue` is called, the result from `initializer` will be cached and returned
     ///   2. Subsequent calls to get `wrappedValue` will return the cached value
