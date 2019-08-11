@@ -162,7 +162,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A3313E8222FBB24300E52342 /* Build configuration list for PBXProject "Swift-Lazy-Patterns" */;
+			buildConfigurationList = A3313E8222FBB24300E52342 /* Build configuration list for PBXProject "LazyContainers" */;
 			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -545,7 +545,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A3313E8222FBB24300E52342 /* Build configuration list for PBXProject "Swift-Lazy-Patterns" */ = {
+		A3313E8222FBB24300E52342 /* Build configuration list for PBXProject "LazyContainers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A3313E8322FBB24300E52342 /* Debug */,
