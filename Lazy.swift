@@ -417,7 +417,7 @@ public struct FunctionalLazy<Value>: LazyContainer {
                 let semaphore = self.semaphore
                 semaphore?.wait()
                 
-                let initialValue = self.initializer()
+                let initialValue = initializer()
                 self.initializer = { initialValue }
                 
                 semaphore?.signal()

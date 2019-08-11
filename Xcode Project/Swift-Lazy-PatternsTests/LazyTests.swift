@@ -62,21 +62,21 @@ class LazyTests: XCTestCase {
     
     func testLazyInitTraditionally() {
         XCTAssertFalse(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
         
-        lazyInitTraditionally.value = "Manual B"
+        lazyInitTraditionally.wrappedValue = "Manual B"
         
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
     }
     
@@ -117,31 +117,31 @@ class LazyTests: XCTestCase {
     
     func testResettableLazyInitTraditionally() {
         XCTAssertFalse(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
         
-        resettableLazyInitTraditionally.value = "Manual D"
+        resettableLazyInitTraditionally.wrappedValue = "Manual D"
         
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
         
         resettableLazyInitTraditionally.clear()
         
         XCTAssertFalse(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
+        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
     }
     
@@ -171,22 +171,22 @@ class LazyTests: XCTestCase {
     
     
     func testFunctionalLazyInitTraditionally() {
-        XCTAssertFalse(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.value)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
+        XCTAssertFalse(functionalLazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy F", functionalLazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy F", functionalLazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy F", functionalLazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
         
-        resettableLazyInitTraditionally.value = "Manual D"
+        functionalLazyInitTraditionally.wrappedValue = "Manual F"
         
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.value)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.value)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.value)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
+        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
     }
 }
