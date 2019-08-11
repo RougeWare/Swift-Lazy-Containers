@@ -10,7 +10,7 @@ A few ways to have a lazily-initialized value in Swift 5.1. Note that, if you ar
 
 # Compatibility Notice #
 
-The API had notable changes when transitioning from 1.1.0 to 2.0.0. To ease this transition, `Lazy.swift` was left in the root of this repo.
+The API had notable changes when transitioning from 1.1.1 to 2.0.0. To ease this transition, `Lazy.swift` was left in the root of this repo.
 
 Additionally, to make this a Swift Package, both `Lazy.swift` and its tests were duplicated.
 
