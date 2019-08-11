@@ -18,7 +18,7 @@ public typealias Initializer<Value> = () -> Value
 
 
 
-/// Defines how a lazy pattern should look
+/// Defines how a lazy container should look
 public protocol LazyContainer {
     
     /// The type of the value that will be lazily-initialized
@@ -26,12 +26,12 @@ public protocol LazyContainer {
     
     /// Gets the value, possibly initializing it first
     var wrappedValue: Value {
-        get // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
-        mutating set
+        get
+        mutating set // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
     }
     
     
-    /// Indicates whether the value has indeed yet been initialized
+    /// Indicates whether the value has indeed been initialized
     var isInitialized: Bool { get }
     
     
@@ -43,11 +43,6 @@ public protocol LazyContainer {
     /// - Parameter initialValue: The value to immediately store in the otherwise-lazy container
     static func preinitialized(_ initialValue: Value) -> Self
 }
-
-
-
-/// The name which was used for `LazyContainer` in version `1.x` of this API. Included for transition smoothness.
-public typealias LazyPattern = LazyContainer
 
 
 
@@ -64,7 +59,7 @@ public extension LazyContainer {
 
 
 
-/// Allows you to use reference semantics to hold a value inside a lazy container
+/// Allows you to use reference-semantics to hold a value inside a lazy container
 @propertyWrapper
 public class LazyContainerValueReference<Value> {
     
@@ -82,15 +77,15 @@ public class LazyContainerValueReference<Value> {
 
 
 
-/// Takes care of keeping track of the state, value, and initializer as needed
+/// Takes care of keeping track of the state, value, and initializer of a lazy container, as needed
 @propertyWrapper
 public enum LazyContainerValueHolder<Value> {
     
     /// Indicates that a value has been cached, and contains that cached value
-    case hasValue(Value)
+    case hasValue(value: Value)
     
     /// Indicates that the value has not yet been created, and contains its initializer
-    case unset(Initializer<Value>)
+    case unset(initializer: Initializer<Value>)
     
     
     /// The value held inside this value holder.
@@ -104,43 +99,44 @@ public enum LazyContainerValueHolder<Value> {
                 
             case .unset(let initializer):
                 let value = initializer()
-                self = .hasValue(value)
+                self = .hasValue(value: value)
                 return value
             }
         }
         
         set {
-            self = .hasValue(newValue)
+            self = .hasValue(value: newValue)
         }
     }
     
     
-    /// Indicates whether this holder actually holds a value
+    /// Indicates whether this holder actually holds a value.
+    /// This will be `true` after reading or writing `wrappedValue`.
     public var hasValue: Bool {
         switch self {
-        case .hasValue(_): return true
-        case .unset(_): return false
+        case .hasValue(value: _): return true
+        case .unset(initializer: _): return false
         }
     }
 }
 
 
 
-/// Takes care of keeping track of the state, value, and initializer as needed
+/// Takes care of keeping track of the state, value, and initializer of a resettable lazy container, as needed
 @propertyWrapper
 public enum LazyContainerResettableValueHolder<Value> {
     
     /// Indicates that a value has been cached, and contains that cached value, and the initializer in case the
     /// value is cleared again later on
-    case hasValue(Value, Initializer<Value>)
+    case hasValue(value: Value, initializer: Initializer<Value>)
     
     /// Indicates that the value has not yet been created, and contains its initializer
-    case unset(Initializer<Value>)
+    case unset(initializer: Initializer<Value>)
     
     /// Finds and returns the initializer held within this enum case
     var initializer: Initializer<Value> {
         switch self {
-        case .hasValue(_, let initializer),
+        case .hasValue(value: _, let initializer),
              .unset(let initializer):
             return initializer
         }
@@ -153,30 +149,32 @@ public enum LazyContainerResettableValueHolder<Value> {
     public var wrappedValue: Value {
         mutating get {
             switch self {
-            case .hasValue(let value, _):
+            case .hasValue(let value, initializer: _):
                 return value
                 
             case .unset(let initializer):
                 let value = initializer()
-                self = .hasValue(value, initializer)
+                self = .hasValue(value: value, initializer: initializer)
                 return value
             }
         }
+        
         set {
             switch self {
-            case .hasValue(_, let initializer),
+            case .hasValue(value: _, let initializer),
                  .unset(let initializer):
-                self = .hasValue(newValue, initializer)
+                self = .hasValue(value: newValue, initializer: initializer)
             }
         }
     }
     
     
-    /// Indicates whether this holder actually holds a value
+    /// Indicates whether this holder actually holds a value.
+    /// This will be `true` after reading or writing `wrappedValue`.
     public var hasValue: Bool {
         switch self {
-        case .hasValue(_, _): return true
-        case .unset(_): return false
+        case .hasValue(value: _, initializer: _): return true
+        case .unset(initializer: _): return false
         }
     }
 }
@@ -185,39 +183,42 @@ public enum LazyContainerResettableValueHolder<Value> {
 
 // MARK: - Lazy
 
-/// A non-resettable lazy pattern, to guarantee lazy behavior across language versions
+/// A non-resettable lazy container, to guarantee lazy behavior across language versions
+///
+/// - Attention: Because of the extra logic and memory required for this behavior, it's recommended that you use the
+///              language's built-in `lazy` instead wherever possible.
 @propertyWrapper
 public struct Lazy<Value>: LazyContainer {
     
-    /// Holds the internal value of this `Lazy`
+    /// Privatizes the inner-workings of this functional lazy container
     @LazyContainerValueReference
     @LazyContainerValueHolder
     public var guts: Value
     
     
     /// Allows other initializers to have a shared point of initialization
-    private init(_wrappedValue: LazyContainerValueReference<LazyContainerValueHolder<Value>>) {
-        self._guts = _wrappedValue
+    private init(_guts: LazyContainerValueReference<LazyContainerValueHolder<Value>>) {
+        self._guts = _guts
     }
     
     
-    /// Creates a non-resettable lazy with the given value initializer. That closure will be called the very first time
-    /// a value is needed:
+    /// Creates a non-resettable lazy container with the given value-initializer. That function will be called the very
+    /// first time a value is needed:
     ///
-    ///   1. The first time `value` is called, the result from `initializer` will be cached and returned
-    ///   2. Subsequent calls to get `value` will return the cached value
+    ///   1. The first time `wrappedValue` is called, the result from `initializer` will be cached and returned
+    ///   2. Subsequent calls to get `wrappedValue` will return the cached value
     ///
     /// - Parameter initializer: The closure that will be called the very first time a value is needed
     public init(initializer: @escaping Initializer<Value>) {
-        self.init(_wrappedValue: .init(wrappedValue: .unset(initializer)))
+        self.init(_guts: .init(wrappedValue: .unset(initializer: initializer)))
     }
 
 
-    /// Same as `init(initializer:)`
+    /// Same as `init(initializer:)`, but allows you to use property wrapper andor autoclosure semantics
     ///
     /// - Parameter initializer: The closure that will be called the very first time a value is needed
     public init(wrappedValue initializer: @autoclosure @escaping Initializer<Value>) {
-        self.init(_wrappedValue: .init(wrappedValue: .unset(initializer)))
+        self.init(initializer: initializer)
     }
     
     
@@ -228,37 +229,21 @@ public struct Lazy<Value>: LazyContainer {
     ///
     /// - Parameter initialValue: The value to immediately store in this `Lazy` container
     public static func preinitialized(_ initialValue: Value) -> Lazy<Value> {
-        self.init(_wrappedValue: .init(wrappedValue: .hasValue(initialValue)))
+        self.init(_guts: .init(wrappedValue: .hasValue(value: initialValue)))
     }
     
     
-    /// Returns the value held within this struct.
-    /// If there is none, it is created using the initializer given when this struct was initialized. This process only
-    /// happens on the first call to `value`; subsequent calls are guaranteed to return the cached value from the first
-    /// call.
-    @available(*, deprecated, renamed: "wrappedValue",
-    message: """
-             `Lazy` is now a Swift 5.1 property wrapper, which requires a `wrappedValue` field.
-             Since these behave identically, you should use the newer `wrappedValue` field instead.
-             """
-    )
-    public var value: Value {
-        get { wrappedValue }
-        mutating set { wrappedValue = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
-    }
-    
-    
-    /// Returns the value held within this struct.
-    /// If there is none, it is created using the initializer given when this struct was initialized. This process only
-    /// happens on the first call to `value`; subsequent calls are guaranteed to return the cached value from the first
-    /// call.
+    /// Returns the value held within this container.
+    /// If there is none, it is created using the initializer given when this struct was created. This process only
+    /// happens on the first call to `wrappedValue`; subsequent calls are guaranteed to return the cached value from
+    /// the first call.
     public var wrappedValue: Value {
         get { guts }
         mutating set { guts = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
     }
     
     
-    /// Indicates whether the value has indeed yet been initialized
+    /// Indicates whether the value has indeed been initialized
     public var isInitialized: Bool { _guts.wrappedValue.hasValue }
 }
 
@@ -266,36 +251,42 @@ public struct Lazy<Value>: LazyContainer {
 
 // MARK: Resettable lazy
 
-/// A resettable lazy pattern, whose value is generated and cached only when first needed, and can be destroyed when
+/// A resettable lazy container, whose value is generated and cached only when first needed, and can be destroyed when
 /// no longer needed.
 ///
 /// - Attention: Because of the extra logic and memory required for this behavior, it's recommended that you use `Lazy`
-///              instead wherever possible.
+///              or the language's built-in `lazy` instead wherever possible.
 @propertyWrapper
 public struct ResettableLazy<Value>: LazyContainer {
     
-    /// Holds the internal value of this `ResettableLazy`
+    /// Privatizes the inner-workings of this functional lazy container
     @LazyContainerValueReference
     @LazyContainerResettableValueHolder
     private var guts: Value
     
     
-    /// Creates a resettable lazy pattern with the given value initializer. That closure will be called every time a
+    /// Allows other initializers to have a shared point of initialization
+    private init(_guts: LazyContainerValueReference<LazyContainerResettableValueHolder<Value>>) {
+        self._guts = _guts
+    }
+    
+    
+    /// Creates a resettable lazy container with the given value-initializer. That function will be called every time a
     /// value is needed:
     ///
-    ///   1. The first time `value` is called, the result from `initializer` will be cached and returned
-    ///   2. Subsequent calls to get `value` will return the cached value
+    ///   1. The first time `wrappedValue` is called, the result from `initializer` will be cached and returned
+    ///   2. Subsequent calls to get `wrappedValue` will return the cached value
     ///   3. If `clear()` is called, the state is set back to step 1
     ///
     /// - Parameter initializer: The closure that will be called every time a value is needed
     public init(initializer: @escaping Initializer<Value>) {
-        _guts = .init(wrappedValue: .unset(initializer))
+        self.init(_guts: .init(wrappedValue: .unset(initializer: initializer)))
     }
     
     
-    /// Same as `init(initializer:)`
+    /// Same as `init(initializer:)`, but allows you to use property wrapper andor autoclosure semantics
     ///
-    /// - Parameter initializer: The closure that will be called the very first time a value is needed
+    /// - Parameter initializer: The closure that will be called every time a value is needed
     public init(wrappedValue initializer: @autoclosure @escaping Initializer<Value>) {
         self.init(initializer: initializer)
     }
@@ -308,52 +299,33 @@ public struct ResettableLazy<Value>: LazyContainer {
     ///
     /// - Parameter initialValue: The value to immediately store in this `ResettableLazy` container
     public static func preinitialized(_ initialValue: Value) -> ResettableLazy<Value> {
-        self.init(wrappedValue: initialValue)
+        self.init(_guts: .init(wrappedValue: .hasValue(value: initialValue, initializer: { initialValue })))
     }
     
     
-    /// Sets or returns the value held within this struct.
+    /// Sets or returns the value held within this container.
     ///
-    /// If there is none, it is created using the initializer given when this struct was initialized. This process only
-    /// happens on the first call to `value`;
+    /// If there is none, it is created using the initializer given when this container was created. This process
+    /// only happens on the first call to `wrappedValue`;
     /// subsequent calls are guaranteed to return the cached value from the first call.
     ///
     /// You may also use this to set the value manually if you wish.
-    /// That value will stay cached until `clear()` is called.
-    @available(*, deprecated, renamed: "wrappedValue",
-    message: """
-             `ResettableLazy` is now a Swift 5.1 property wrapper, which requires a `wrappedValue` field.
-             Since these behave identically, you should use the newer `wrappedValue` field instead.
-             """
-    )
-    public var value: Value {
-        get { wrappedValue }
-        mutating set { wrappedValue = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
-    }
-    
-    
-    /// Sets or returns the value held within this struct.
-    ///
-    /// If there is none, it is created using the initializer given when this struct was initialized. This process only
-    /// happens on the first call to `value`;
-    /// subsequent calls are guaranteed to return the cached value from the first call.
-    ///
-    /// You may also use this to set the value manually if you wish.
-    /// That value will stay cached until `clear()` is called.
+    /// That value will stay cached until `clear()` is called, after which calls to `wrappedValue` will return the
+    /// original value, re-initializing it as necessary.
     public var wrappedValue: Value {
         get { guts }
         mutating set { guts = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
     }
     
     
-    /// Indicates whether the value has indeed yet been initialized
+    /// Indicates whether the value has indeed been initialized
     public var isInitialized: Bool { _guts.wrappedValue.hasValue }
     
     
     /// Resets this lazy structure back to its unset state. Next time a value is needed, it will be regenerated using
     /// the initializer given by the constructor
     public func clear() {
-        _guts.wrappedValue = .unset(_guts.wrappedValue.initializer)
+        _guts.wrappedValue = .unset(initializer: _guts.wrappedValue.initializer)
     }
 }
 
@@ -361,13 +333,10 @@ public struct ResettableLazy<Value>: LazyContainer {
 
 // MARK: - Functional lazy
 
-/// An idea about how to approach the lazy pattern by using functions instead of branches.
+/// An idea about how to approach the lazy container by using functions instead of branches.
 ///
-/// - Attention: This is theoretically thread-safe, but hasn't undergone rigorous testing. The other two lazy patterns
-///              in this file are `structs`, which means their value-passed nature gives them natural thread-safety,
-///              whereas this is a `class`, which makes its reference-passed nature exposes it to possible
-///              thread-unsafety. A short-lived semaphore was added to mitigate this, but again, it hasn't undergone
-///              rigorous testing.
+/// - Attention: This is theoretically thread-safe, but hasn't undergone rigorous real-world testing. A short-lived
+///              semaphore was added to mitigate this, but again, it hasn't undergone rigorous real-world testing.
 @propertyWrapper
 public struct FunctionalLazy<Value>: LazyContainer {
     
@@ -376,23 +345,29 @@ public struct FunctionalLazy<Value>: LazyContainer {
     private var guts: Value
     
     
-    /// Creates a non-resettable lazy with the given value initializer. That closure will be called the very first time
-    /// a value is needed:
-    ///
-    ///   1. The first time `value` is called, the result from `initializer` will be cached and returned
-    ///   2. Subsequent calls to get `value` will return the cached value
-    ///
-    /// - Parameter initializer: The closure that will be called the very first time a value is needed
-    public init(initializer: @escaping Initializer<Value>) {
-        _guts = .init(initializer: initializer)
+    /// Allows other initializers to have a shared point of initialization
+    private init(_guts: Guts<Value>) {
+        self._guts = _guts
     }
     
     
-    /// Same as `init(initializer:)`
+    /// Creates a non-resettable lazy container with the given value-initializer. That function will be called the very
+    /// first time a value is needed:
+    ///
+    ///   1. The first time `wrappedValue` is called, the result from `initializer` will be cached and returned
+    ///   2. Subsequent calls to get `wrappedValue` will return the cached value
     ///
     /// - Parameter initializer: The closure that will be called the very first time a value is needed
-    public init(wrappedValue initialValue: @autoclosure @escaping Initializer<Value>) {
-        self.init(initializer: initialValue)
+    public init(initializer: @escaping Initializer<Value>) {
+        self.init(_guts: .init(initializer: initializer))
+    }
+    
+    
+    /// Same as `init(initializer:)`, but allows you to use property wrapper andor autoclosure semantics
+    ///
+    /// - Parameter initializer: The closure that will be called the very first time a value is needed
+    public init(wrappedValue initializer: @autoclosure @escaping Initializer<Value>) {
+        self.init(initializer: initializer)
     }
     
     
@@ -403,18 +378,123 @@ public struct FunctionalLazy<Value>: LazyContainer {
     ///
     /// - Parameter initialValue: The value to immediately store in this `FunctionalLazy` container
     public static func preinitialized(_ initialValue: Value) -> FunctionalLazy<Value> {
-        self.init(wrappedValue: initialValue)
+        self.init(_guts: .init(initializer: { initialValue }))
     }
     
+    
+    /// Returns the value held within this container.
+    /// If there is none, it is created using the initializer given when this container was created. This process
+    /// only happens on the first call to `wrappedValue`; subsequent calls return the cached value from the first call,
+    /// or any value you've set this to.
+    public var wrappedValue: Value {
+        get { guts }
+        mutating set { guts = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
+    }
+    
+    
+    /// Indicates whether the value has indeed been initialized
+    public var isInitialized: Bool { _guts.isInitialized }
+    
+    
+    
+    /// The actual functionality of `FunctionalLazy`, separated so that the semantics work out better
+    @propertyWrapper
+    private final class Guts<Value> {
+        
+        /// The closure called every time a value is needed
+        var initializer: Initializer<Value>
+        
+        /// Guarantees that, on first-init, only one thread initializes the value. After that, this is set to `nil`
+        /// because subsequent threads can safely access the value without the risk of setting it again.
+        var semaphore: DispatchSemaphore? = .init(value: 1)
+        
+
+        /// Creates a non-resettable lazy container's guts with the given value-initializer. That function will be
+        /// called the very first time a value is needed.
+        init(initializer: @escaping Initializer<Value>) {
+            self.initializer = initializer
+            self.initializer = {
+                let semaphore = self.semaphore
+                semaphore?.wait()
+                
+                let initialValue = self.initializer()
+                self.initializer = { initialValue }
+                
+                semaphore?.signal()
+                self.semaphore = nil
+                
+                return initialValue
+            }
+        }
+        
+
+        /// Returns the value held within this container.
+        /// If there is none, it is created using the initializer given when these guts were created. This process
+        /// only happens on the first call to `wrappedValue`; subsequent calls return the cached value from the first
+        /// call, or any value you've set this to.
+        var wrappedValue: Value {
+            get { initializer() }
+            set { initializer = { newValue } }
+        }
+        
+
+        /// Indicates whether the value has indeed been initialized
+        public var isInitialized: Bool { nil == semaphore }
+    }
+}
+
+
+
+// MARK: - Migration Assistant
+
+
+
+/// The name which was used for `LazyContainer` in version `1.x` of this API. Included for transition smoothness.
+@available(*, deprecated, renamed: "LazyContainer")
+public typealias LazyPattern = LazyContainer
+
+
+
+public extension Lazy {
+    
+    /// Returns the value held within this struct.
+    /// If there is none, it is created using the initializer given when this struct was initialized. This process only
+    /// happens on the first call to `value`; subsequent calls are guaranteed to return the cached value from the first
+    /// call.
+    @available(*, deprecated, renamed: "wrappedValue",
+    message: """
+             `Lazy` is now a Swift 5.1 property wrapper, which requires a `wrappedValue` field.
+             Since these behave identically, you should use the newer `wrappedValue` field instead.
+             """
+    )
+    var value: Value {
+        get { wrappedValue }
+        mutating set { wrappedValue = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
+    }
+}
+
+
+
+public extension ResettableLazy {
     
     /// Returns the value held within this struct.
     /// If there is none, it is created using the initializer given when this struct was initialized. This process only
     /// happens on the first call to `value`; subsequent calls return the cached value from the first call.
-    public var wrappedValue: Value {
-        get { guts }
-        set { guts = newValue }
+    @available(*, deprecated, renamed: "wrappedValue",
+    message: """
+             `ResettableLazy` is now a Swift 5.1 property wrapper, which requires a `wrappedValue` field.
+             Since these behave identically, you should use the newer `wrappedValue` field instead.
+             """
+    )
+    var value: Value {
+        get { wrappedValue }
+        mutating set { wrappedValue = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
     }
-    
+}
+
+
+
+public extension FunctionalLazy {
     
     /// Returns the value held within this struct.
     /// If there is none, it is created using the initializer given when this struct was initialized. This process only
@@ -425,51 +505,8 @@ public struct FunctionalLazy<Value>: LazyContainer {
              Since these behave identically, you should use the newer `wrappedValue` field instead.
              """
     )
-    public var value: Value {
+    var value: Value {
         get { wrappedValue }
-        set { wrappedValue = newValue }
-    }
-    
-    
-    /// Indicates whether the value has indeed yet been initialized
-    public var isInitialized: Bool { _guts.isInitialized }
-    
-    
-    
-    /// The actual functionality of `FunctionalLazy`, so the semantics work out better
-    @propertyWrapper
-    private final class Guts<Value> {
-        
-        /// The closure called every time a value is needed
-        var initializer: Initializer<Value>! = nil
-        
-        /// Guarantees that, on first-init, only one thread initializes the value. After that, this is set to `nil` because
-        /// subsequent threads can safely access the value without setting it again.
-        var semaphore: DispatchSemaphore? = .init(value: 1)
-        
-        init(initializer: @escaping Initializer<Value>) {
-            self.initializer = initializer
-            self.initializer = {
-                self.semaphore?.wait()
-                
-                let initialValue = self.initializer()
-                self.initializer = { initialValue }
-                
-                self.semaphore?.signal()
-                self.semaphore = nil
-                
-                return initialValue
-            }
-        }
-        
-        
-        var wrappedValue: Value {
-            get { initializer() }
-            set { initializer = { newValue } }
-        }
-        
-
-        /// Indicates whether the value has indeed yet been initialized
-        public var isInitialized: Bool { nil == semaphore }
+        mutating set { wrappedValue = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
     }
 }
