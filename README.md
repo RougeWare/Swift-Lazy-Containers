@@ -70,7 +70,7 @@ print(myLazyString) // Just returns the value "Overwritten"
 print(myLazyString) // Just returns the value "Overwritten"
 ```
 
-You can also use it directly:
+You can also use it directly (instaed of as a property wrapper):
 
 ```swift
 var myLazyString = Lazy<String>() {
@@ -157,7 +157,7 @@ _myLazyString.clear()
 print(myLazyString.value) // Initializes, caches, and returns the value  "Hello, lazy!"
 ```
 
-You can also use it directly:
+You can also use it directly (instaed of as a property wrapper):
 
 ```swift
 var myLazyString = ResettableLazy<String>() {
