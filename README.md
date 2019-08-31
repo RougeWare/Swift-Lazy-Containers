@@ -78,12 +78,12 @@ var myLazyString = Lazy<String>() {
     return "Hello, lazy!"
 }
 
-print(myLazyString.value) // Initializes, caches, and returns the value "Hello, lazy!"
-print(myLazyString.value) // Just returns the value "Hello, lazy!"
+print(myLazyString.wrappedValue) // Initializes, caches, and returns the value "Hello, lazy!"
+print(myLazyString.wrappedValue) // Just returns the value "Hello, lazy!"
 
-myLazyString.value = "Overwritten"
-print(myLazyString.value) // Just returns the value "Overwritten"
-print(myLazyString.value) // Just returns the value "Overwritten"
+myLazyString.wrappedValue = "Overwritten"
+print(myLazyString.wrappedValue) // Just returns the value "Overwritten"
+print(myLazyString.wrappedValue) // Just returns the value "Overwritten"
 ```
 
 These will both print:
@@ -116,7 +116,7 @@ print(myLazyString) // Just returns the value "Hello, lazy!"
 myLazyString = "Overwritten"
 print(myLazyString) // Just returns the value "Overwritten"
 _myLazyString.clear()
-print(myLazyString.value) // Initializes, caches, and returns the value  "Hello, lazy!"
+print(myLazyString.wrappedValue) // Initializes, caches, and returns the value  "Hello, lazy!"
 ```
 
 This will print:
@@ -154,7 +154,7 @@ print(myLazyString) // Just returns the value "Hello, lazy!"
 myLazyString = "Overwritten"
 print(myLazyString) // Just returns the value "Overwritten"
 _myLazyString.clear()
-print(myLazyString.value) // Initializes, caches, and returns the value  "Hello, lazy!"
+print(myLazyString.wrappedValue) // Initializes, caches, and returns the value  "Hello, lazy!"
 ```
 
 You can also use it directly (instaed of as a property wrapper):
@@ -165,17 +165,17 @@ var myLazyString = ResettableLazy<String>() {
     return "Hello, lazy!"
 }
 
-print(myLazyString.value) // Initializes, caches, and returns the value "Hello, lazy!"
-print(myLazyString.value) // Just returns the value "Hello, lazy!"
+print(myLazyString.wrappedValue) // Initializes, caches, and returns the value "Hello, lazy!"
+print(myLazyString.wrappedValue) // Just returns the value "Hello, lazy!"
 
 myLazyString.clear()
-print(myLazyString.value) // Initializes, caches, and returns the value "Hello, lazy!"
-print(myLazyString.value) // Just returns the value "Hello, lazy!"
+print(myLazyString.wrappedValue) // Initializes, caches, and returns the value "Hello, lazy!"
+print(myLazyString.wrappedValue) // Just returns the value "Hello, lazy!"
 
-myLazyString.value = "Overwritten"
-print(myLazyString.value) // Just returns the value "Overwritten"
+myLazyString.wrappedValue = "Overwritten"
+print(myLazyString.wrappedValue) // Just returns the value "Overwritten"
 _myLazyString.clear()
-print(myLazyString.value) // Initializes, caches, and returns the value  "Hello, lazy!"
+print(myLazyString.wrappedValue) // Initializes, caches, and returns the value  "Hello, lazy!"
 ```
 
 These will both print:
