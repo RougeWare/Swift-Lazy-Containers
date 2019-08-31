@@ -1,14 +1,18 @@
 //
-//  LazyTests.swift
-//  Swift-Lazy-PatternsTests
+//  LazyContainersTests.swift
 //
-//  Created by Ben Leggiero on 8/7/19.
+//  Created by Ben Leggiero on 2019-08-19
+//  Copyright BH-0-PD © 2019 - https://github.com/BlueHuskyStudios/Licenses/blob/master/Licenses/BH-0-PD.txt
 //
+
+
 
 import XCTest
 @testable import LazyContainers
 
-class LazyTests: XCTestCase {
+
+
+final class LazyContainersTests: XCTestCase {
     
     @Lazy
     var lazyInitWithPropertyWrapper = "lAzy"
@@ -189,4 +193,15 @@ class LazyTests: XCTestCase {
         XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
     }
+
+    static var allTests = [
+        ("testLazyInitWithPropertyWrapper", testLazyInitWithPropertyWrapper),
+        ("testLazyInitTraditionally", testLazyInitTraditionally),
+        
+        ("testResettableLazyInitWithPropertyWrapper", testResettableLazyInitWithPropertyWrapper),
+        ("testResettableLazyInitTraditionally", testResettableLazyInitTraditionally),
+        
+        ("testFunctionalLazyInitWithPropertyWrapper", testFunctionalLazyInitWithPropertyWrapper),
+        ("testFunctionalLazyInitTraditionally", testFunctionalLazyInitTraditionally),
+    ]
 }
