@@ -193,7 +193,7 @@ public struct Lazy<Value>: LazyContainer {
     /// Privatizes the inner-workings of this functional lazy container
     @LazyContainerValueReference
     @LazyContainerValueHolder
-    public var guts: Value
+    private var guts: Value
     
     
     /// Allows other initializers to have a shared point of initialization
