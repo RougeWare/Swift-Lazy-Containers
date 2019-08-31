@@ -192,8 +192,7 @@ public struct Lazy<Value>: LazyContainer {
     
     /// Privatizes the inner-workings of this functional lazy container
     @LazyContainerValueReference
-    @LazyContainerValueHolder
-    private var guts: Value
+    private var guts: LazyContainerValueHolder<Value>
     
     
     /// Allows other initializers to have a shared point of initialization
@@ -238,8 +237,8 @@ public struct Lazy<Value>: LazyContainer {
     /// happens on the first call to `wrappedValue`; subsequent calls are guaranteed to return the cached value from
     /// the first call.
     public var wrappedValue: Value {
-        get { guts }
-        mutating set { guts = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
+        get { guts.wrappedValue }
+        mutating set { guts.wrappedValue = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
     }
     
     
@@ -261,8 +260,7 @@ public struct ResettableLazy<Value>: LazyContainer {
     
     /// Privatizes the inner-workings of this functional lazy container
     @LazyContainerValueReference
-    @LazyContainerResettableValueHolder
-    private var guts: Value
+    private var guts: LazyContainerResettableValueHolder<Value>
     
     
     /// Allows other initializers to have a shared point of initialization
@@ -313,8 +311,8 @@ public struct ResettableLazy<Value>: LazyContainer {
     /// That value will stay cached until `clear()` is called, after which calls to `wrappedValue` will return the
     /// original value, re-initializing it as necessary.
     public var wrappedValue: Value {
-        get { guts }
-        mutating set { guts = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
+        get { guts.wrappedValue }
+        mutating set { guts.wrappedValue = newValue } // If you feel like you want this to be nonmutating, see https://GitHub.com/RougeWare/Swift-Safe-Pointer
     }
     
     
