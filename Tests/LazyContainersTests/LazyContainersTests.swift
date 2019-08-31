@@ -100,6 +100,12 @@ final class LazyContainersTests: XCTestCase {
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
         XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
         
         lazyInitTraditionally.wrappedValue = "Manual B"
         
@@ -109,6 +115,28 @@ final class LazyContainersTests: XCTestCase {
         XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
         XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        
+        lazyInitTraditionally.value = "Manual B2"
+        
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
     }
     
