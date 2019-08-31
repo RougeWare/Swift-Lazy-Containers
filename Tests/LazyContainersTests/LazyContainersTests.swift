@@ -12,12 +12,24 @@ import XCTest
 
 
 
+var sideEffect: String?
+
+func makeLazyA() -> String {
+    sideEffect = "Side effect A"
+    return "lAzy"
+}
+
+
+
 final class LazyContainersTests: XCTestCase {
     
-    @Lazy
-    var lazyInitWithPropertyWrapper = "lAzy"
+    @Lazy(initializer: makeLazyA)
+    var lazyInitWithPropertyWrapper: String
     
-    var lazyInitTraditionally = Lazy(wrappedValue: "lazy B")
+    var lazyInitTraditionally = Lazy<String>() {
+        sideEffect = "Side effect B"
+        return "lazy B"
+    }
     
     @ResettableLazy
     var resettableLazyInitWithPropertyWrapper = "lazy C"
@@ -31,7 +43,7 @@ final class LazyContainersTests: XCTestCase {
     
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        sideEffect = nil
     }
     
 
@@ -44,23 +56,39 @@ final class LazyContainersTests: XCTestCase {
     // MARK: - `Lazy`
     
     func testLazyInitWithPropertyWrapper() {
+        XCTAssertEqual(sideEffect, nil)
         XCTAssertFalse(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, nil)
         XCTAssertEqual("lAzy", lazyInitWithPropertyWrapper)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertEqual("lAzy", lazyInitWithPropertyWrapper)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertEqual("lAzy", lazyInitWithPropertyWrapper)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, "Side effect A")
         
         lazyInitWithPropertyWrapper = "MAnual"
         
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertEqual("MAnual", lazyInitWithPropertyWrapper)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertEqual("MAnual", lazyInitWithPropertyWrapper)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertEqual("MAnual", lazyInitWithPropertyWrapper)
+        XCTAssertEqual(sideEffect, "Side effect A")
         XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
+        XCTAssertEqual(sideEffect, "Side effect A")
     }
     
     
@@ -72,6 +100,12 @@ final class LazyContainersTests: XCTestCase {
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
         XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
         
         lazyInitTraditionally.wrappedValue = "Manual B"
         
@@ -81,6 +115,28 @@ final class LazyContainersTests: XCTestCase {
         XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
         XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        
+        lazyInitTraditionally.value = "Manual B2"
+        
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
+        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
         XCTAssertTrue(lazyInitTraditionally.isInitialized)
     }
     
