@@ -188,6 +188,7 @@ public enum LazyContainerResettableValueHolder<Value> {
 /// - Attention: Because of the extra logic and memory required for this behavior, it's recommended that you use the
 ///              language's built-in `lazy` instead wherever possible.
 @propertyWrapper
+@dynamicMemberLookup
 public struct Lazy<Value>: LazyContainer {
     
     /// Privatizes the inner-workings of this functional lazy container
@@ -244,6 +245,33 @@ public struct Lazy<Value>: LazyContainer {
     
     /// Indicates whether the value has indeed been initialized
     public var isInitialized: Bool { _guts.wrappedValue.hasValue }
+    
+    
+    // MARK: @dynamicMemberLookup
+    
+    public subscript<Subject>(dynamicMember keyPath: KeyPath<Value, Subject>) -> Subject {
+        wrappedValue[keyPath: keyPath]
+    }
+    
+    
+    public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Value, Subject>) -> Subject {
+        get {
+            wrappedValue[keyPath: keyPath]
+        }
+        mutating set {
+            wrappedValue[keyPath: keyPath] = newValue
+        }
+    }
+    
+    
+    public subscript<Subject>(dynamicMember keyPath: ReferenceWritableKeyPath<Value, Subject>) -> Subject {
+        get {
+            wrappedValue[keyPath: keyPath]
+        }
+        nonmutating set {
+            wrappedValue[keyPath: keyPath] = newValue
+        }
+    }
 }
 
 
