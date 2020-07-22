@@ -1,10 +1,11 @@
 //
-//  Lazy.swift
+//  LazyContainers.swift
 //  Lazy in Swift 5.1
 //
 //  Created by Ben Leggiero on 2018-05-04.
-//  Version 3.0.0 (last edited 2019-08-30)
-//  Copyright BH-0-PD © 2019 - https://github.com/BlueHuskyStudios/Licenses/blob/master/Licenses/BH-0-PD.txt
+//  Version 3.1.0 (last edited 2019-08-30)
+//  Copyright Ben Leggiero © 2020
+//  https://github.com/RougeWare/Swift-Lazy-Patterns/blob/master/LICENSE.txt
 //
 
 import Foundation
