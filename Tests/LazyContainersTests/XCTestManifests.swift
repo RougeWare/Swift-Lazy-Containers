@@ -4,6 +4,7 @@ import XCTest
 public func allTests() -> [XCTestCaseEntry] {
     return [
         testCase(LazyContainersTests.allTests),
+        testCase(GitHubIssue20Tests.allTests),
     ]
 }
 #endif
