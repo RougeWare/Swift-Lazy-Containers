@@ -217,6 +217,13 @@ public struct Lazy<Value>: LazyContainer {
     /// Same as `init(initializer:)`, but allows you to use property wrapper andor autoclosure semantics
     ///
     /// - Parameter initializer: The closure that will be called the very first time a value is needed
+    @available(swift, // https://github.com/RougeWare/Swift-Lazy-Patterns/issues/20
+        introduced: 5.3,
+        message: """
+            Due to changes introduced in Swift 5.3, property wrappers can now be passed their initial value lazily, through the language assignment syntax. This initializer requires that behavior to work properly.
+            For Swift 5.2.x and earlier, I recommend you don't use `Lazy` as a property wrapper, since Swift 5.2.x property wrappers can't guarantee lazy evaluation.
+            This is a real downer for me, but at least it appears to have been a fixable bug, rather than a problem with the core feature itself.
+        """)
     public init(wrappedValue initializer: @autoclosure @escaping Initializer<Value>) {
         self.init(initializer: initializer)
     }
