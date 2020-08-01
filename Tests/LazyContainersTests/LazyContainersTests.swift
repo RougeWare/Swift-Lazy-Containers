@@ -12,13 +12,13 @@ import XCTest
 
 
 
-var sideEffectA: String? = nil
+var sideEffectA: String?
 func makeLazyA() -> String {
     sideEffectA = "Side effect A1"
     return "lAzy"
 }
 
-var sideEffectB: String? = nil
+var sideEffectB: String?
 func makeLazyB() -> String {
     sideEffectB = "Side effect B"
     return "Lazy B (this time with side-effects)"
