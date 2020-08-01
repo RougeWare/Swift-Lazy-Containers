@@ -28,8 +28,10 @@ func makeLazyB() -> String {
 
 final class LazyContainersTests: XCTestCase {
     
+    #if swift(>=5.3)
     @Lazy(initializer: makeLazyA)
     var lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect: String
+    #endif
     
     var lazyInitTraditionally = Lazy<String>() {
         sideEffectA = "Side effect A2"
@@ -61,6 +63,7 @@ final class LazyContainersTests: XCTestCase {
     
     // MARK: - `Lazy`
     
+    #if swift(>=5.3)
     func testLazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect() {
         XCTAssertEqual(sideEffectA, nil)
         XCTAssertFalse(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
@@ -111,6 +114,7 @@ final class LazyContainersTests: XCTestCase {
         XCTAssertNil(sideEffectB, "@Lazy eagerly evaluated its initial value")
         XCTAssertEqual(test.lazyInitWithPropertyWrapperAndSideEffect, "Lazy B (this time with side-effects)")
     }
+    #endif
     
     
     func testLazyInitTraditionally() {
@@ -270,9 +274,16 @@ final class LazyContainersTests: XCTestCase {
         XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
     }
-
-    static var allTests = [
+    
+    #if swift(>=5.3)
+    static let testsWhichRequireSwift5_3 = [
         ("testLazyInitWithPropertyWrapperWithCustomInitializerAndSideEffect", testLazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect),
+        ("testLazyInitWithPropertyWrapperAndSideEffect", testLazyInitWithPropertyWrapperAndSideEffect),
+    ]
+    #endif
+    
+    
+    static let testsWhichWorkBeforeSwift5_3 = [
         ("testLazyInitTraditionally", testLazyInitTraditionally),
         
         ("testResettableLazyInitWithPropertyWrapper", testResettableLazyInitWithPropertyWrapper),
@@ -281,4 +292,12 @@ final class LazyContainersTests: XCTestCase {
         ("testFunctionalLazyInitWithPropertyWrapper", testFunctionalLazyInitWithPropertyWrapper),
         ("testFunctionalLazyInitTraditionally", testFunctionalLazyInitTraditionally),
     ]
+    
+    
+    #if swift(>=5.3)
+    static let allTests = testsWhichRequireSwift5_3 + testsWhichWorkBeforeSwift5_3
+    #else
+    @inline(__always)
+    static let allTests = testsWhichWorkBeforeSwift5_3
+    #endif
 }

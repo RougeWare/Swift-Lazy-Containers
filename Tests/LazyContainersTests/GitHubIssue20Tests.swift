@@ -10,6 +10,7 @@ import XCTest
 
 
 
+#if swift(>=5.3)
 var shouldNotRun = false
 
 class ShouldNotInit {
@@ -35,3 +36,4 @@ final class GitHubIssue20Tests: XCTestCase {
         ("testLazyInitWithPropertyWrapper", testLazyInitWithPropertyWrapper)
     ]
 }
+#endif
