@@ -1,8 +1,10 @@
 //
 //  LazyContainersTests.swift
+//  LazyContainersTests
 //
 //  Created by Ben Leggiero on 2019-08-19
-//  Copyright BH-0-PD © 2019 - https://github.com/BlueHuskyStudios/Licenses/blob/master/Licenses/BH-0-PD.txt
+//  Copyright Ben Leggiero © 2020
+//  https://github.com/RougeWare/Swift-Lazy-Patterns/blob/master/LICENSE.txt
 //
 
 

@@ -1,9 +1,9 @@
 //
 //  LazyContainers.swift
-//  Lazy in Swift 5.1
+//  Lazy in Swift 5.2
 //
 //  Created by Ben Leggiero on 2018-05-04.
-//  Version 3.1.0 (last edited 2019-08-30)
+//  Version 4.0.0 (last edited 2020-08-01)
 //  Copyright Ben Leggiero © 2020
 //  https://github.com/RougeWare/Swift-Lazy-Patterns/blob/master/LICENSE.txt
 //

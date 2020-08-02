@@ -2,7 +2,7 @@
 //  GitHubIssue20Tests.swift
 //  LazyContainersTests
 //
-//  Created by Ben Leggiero on 2020-07-29.
+//  Created by Gabe Shahbazian on 2020-07-29.
 //
 
 import XCTest
