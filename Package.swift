@@ -32,5 +32,7 @@ let package = Package(
         .testTarget(
             name: "LazyContainersTests",
             dependencies: ["LazyContainers"]),
-    ]
+    ],
+    
+    swiftLanguageVersions: [.v5]
 )

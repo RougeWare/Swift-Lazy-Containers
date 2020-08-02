@@ -2,6 +2,9 @@ import XCTest
 
 import LazyContainersTests
 
-var tests = [XCTestCaseEntry]()
-tests += LazyContainersTests.allTests()
+let tests: [XCTestCaseEntry] = [
+    LazyContainersTests.allTests,
+    GitHubIssue20Tests.allTests,
+]
+
 XCTMain(tests)

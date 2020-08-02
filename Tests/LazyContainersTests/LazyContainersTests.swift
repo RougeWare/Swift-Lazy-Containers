@@ -1,8 +1,10 @@
 //
 //  LazyContainersTests.swift
+//  LazyContainersTests
 //
 //  Created by Ben Leggiero on 2019-08-19
-//  Copyright BH-0-PD © 2019 - https://github.com/BlueHuskyStudios/Licenses/blob/master/Licenses/BH-0-PD.txt
+//  Copyright Ben Leggiero © 2020
+//  https://github.com/RougeWare/Swift-Lazy-Patterns/blob/master/LICENSE.txt
 //
 
 
@@ -12,22 +14,29 @@ import XCTest
 
 
 
-var sideEffect: String?
-
+var sideEffectA: String?
 func makeLazyA() -> String {
-    sideEffect = "Side effect A"
+    sideEffectA = "Side effect A1"
     return "lAzy"
+}
+
+var sideEffectB: String?
+func makeLazyB() -> String {
+    sideEffectB = "Side effect B"
+    return "Lazy B (this time with side-effects)"
 }
 
 
 
 final class LazyContainersTests: XCTestCase {
     
+    #if swift(>=5.3)
     @Lazy(initializer: makeLazyA)
-    var lazyInitWithPropertyWrapper: String
+    var lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect: String
+    #endif
     
     var lazyInitTraditionally = Lazy<String>() {
-        sideEffect = "Side effect B"
+        sideEffectA = "Side effect A2"
         return "lazy B"
     }
     
@@ -43,7 +52,8 @@ final class LazyContainersTests: XCTestCase {
     
 
     override func setUp() {
-        sideEffect = nil
+        sideEffectA = nil
+        sideEffectB = nil
     }
     
 
@@ -55,41 +65,58 @@ final class LazyContainersTests: XCTestCase {
     
     // MARK: - `Lazy`
     
-    func testLazyInitWithPropertyWrapper() {
-        XCTAssertEqual(sideEffect, nil)
-        XCTAssertFalse(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, nil)
-        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapper)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapper)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapper)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, "Side effect A")
+    #if swift(>=5.3)
+    func testLazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect() {
+        XCTAssertEqual(sideEffectA, nil)
+        XCTAssertFalse(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, nil)
+        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
         
-        lazyInitWithPropertyWrapper = "MAnual"
+        lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect = "MAnual"
         
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapper)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapper)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapper)
-        XCTAssertEqual(sideEffect, "Side effect A")
-        XCTAssertTrue(_lazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual(sideEffect, "Side effect A")
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
+        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        XCTAssertEqual(sideEffectA, "Side effect A1")
     }
+    
+    
+    func testLazyInitWithPropertyWrapperAndSideEffect() {
+        
+        struct Test {
+            @Lazy
+            var lazyInitWithPropertyWrapperAndSideEffect = makeLazyB()
+        }
+        
+        
+        let test = Test()
+        
+        XCTAssertNil(sideEffectB, "@Lazy eagerly evaluated its initial value")
+        XCTAssertEqual(test.lazyInitWithPropertyWrapperAndSideEffect, "Lazy B (this time with side-effects)")
+    }
+    #endif
     
     
     func testLazyInitTraditionally() {
@@ -249,9 +276,16 @@ final class LazyContainersTests: XCTestCase {
         XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
         XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
     }
-
-    static var allTests = [
-        ("testLazyInitWithPropertyWrapper", testLazyInitWithPropertyWrapper),
+    
+    #if swift(>=5.3)
+    static let testsWhichRequireSwift5_3 = [
+        ("testLazyInitWithPropertyWrapperWithCustomInitializerAndSideEffect", testLazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect),
+        ("testLazyInitWithPropertyWrapperAndSideEffect", testLazyInitWithPropertyWrapperAndSideEffect),
+    ]
+    #endif
+    
+    
+    static let testsWhichWorkBeforeSwift5_3 = [
         ("testLazyInitTraditionally", testLazyInitTraditionally),
         
         ("testResettableLazyInitWithPropertyWrapper", testResettableLazyInitWithPropertyWrapper),
@@ -260,4 +294,12 @@ final class LazyContainersTests: XCTestCase {
         ("testFunctionalLazyInitWithPropertyWrapper", testFunctionalLazyInitWithPropertyWrapper),
         ("testFunctionalLazyInitTraditionally", testFunctionalLazyInitTraditionally),
     ]
+    
+    
+    #if swift(>=5.3)
+    static let allTests = testsWhichRequireSwift5_3 + testsWhichWorkBeforeSwift5_3
+    #else
+    @inline(__always)
+    static let allTests = testsWhichWorkBeforeSwift5_3
+    #endif
 }
