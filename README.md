@@ -1,4 +1,4 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/rougeware/swift-lazy-patterns/badge)](https://www.codefactor.io/repository/github/rougeware/swift-lazy-patterns)
+[![CodeFactor](https://www.codefactor.io/repository/github/rougeware/swift-lazy-containers/badge)](https://www.codefactor.io/repository/github/rougeware/swift-lazy-containers)
 [![Swift GitHub workflow](https://github.com/RougeWare/Swift-Lazy-Patterns/workflows/Swift/badge.svg)](https://github.com/RougeWare/Swift-Lazy-Patterns/actions?query=workflow%3ASwift)
 
 # [Swift Lazy Containers](https://github.com/RougeWare/Swift-Lazy-Patterns) #
