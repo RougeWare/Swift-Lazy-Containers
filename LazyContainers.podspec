@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
     s.source       = { :git => "https://github.com/RougeWare/Swift-Lazy-Containers.git", :tag => s.version.to_s }
     s.source_files = 'Sources/LazyContainers/**/*.swift'
     s.frameworks  = "Foundation"
-    s.swift_versions = ['5.1', '5.2']
+    s.swift_versions = ['5.1', '5.2', '5.3']
   end
