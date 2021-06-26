@@ -1,5 +1,9 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/rougeware/swift-lazy-containers/badge)](https://www.codefactor.io/repository/github/rougeware/swift-lazy-containers)
-[![Swift GitHub workflow](https://github.com/RougeWare/Swift-Lazy-Patterns/workflows/Swift/badge.svg)](https://github.com/RougeWare/Swift-Lazy-Patterns/actions?query=workflow%3ASwift)
+[![Tested on GitHub Actions](https://github.com/RougeWare/swift-lazy-containers/actions/workflows/swift.yml/badge.svg)](https://github.com/RougeWare/swift-lazy-containers/actions/workflows/swift.yml) [![](https://www.codefactor.io/repository/github/rougeware/swift-lazy-containers/badge)](https://www.codefactor.io/repository/github/rougeware/swift-lazy-containers)
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FRougeWare%2FSwift-Lazy-Containers%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/RougeWare/Swift-Lazy-Containers) [![swift package manager 5.2 is supported](https://img.shields.io/badge/swift%20package%20manager-5.2-brightgreen.svg)](https://swift.org/package-manager) [![Supports macOS, iOS, tvOS, watchOS, Linux, & Windows](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FRougeWare%2FSwift-Lazy-Containers%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/RougeWare/Swift-Lazy-Containers) 
+[![](https://img.shields.io/github/release-date/rougeware/swift-lazy-containers?label=latest%20release)](https://github.com/RougeWare/Swift-Lazy-Containers/releases/latest)
+
+
 
 # [Swift Lazy Containers](https://github.com/RougeWare/Swift-Lazy-Patterns) #
 A few ways to have a lazily-initialized value in Swift 5.1. Note that, if you are OK with the behavior of Swift's `lazy` keyword, you should use that. This is for [those who want very specific behaviors](https://stackoverflow.com/a/40847994/3939277):
