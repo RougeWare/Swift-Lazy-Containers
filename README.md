@@ -14,6 +14,14 @@ A few ways to have a lazily-initialized value in Swift 5.1. Note that, if you ar
 
 
 
+# Automatic Conformance #
+
+The built-in containers (`Lazy`, `ResettableLazy`, and `FunctionalLazy`) automatically conform to `Equatable` when their values conform do too!
+
+Keep in mind, though, that in order to do this, the value is automatically initialized and accessed!
+
+
+
 # Compatibility Notice #
 
 The entire repository structure had to be changed in order to be compatible with Swift Package Manager ([#4](https://github.com/RougeWare/Swift-Lazy-Patterns/issues/4)). Because of this, the API version changed from 2.0.0 to 3.0.0. Very little of the actual API changed along with this ([#8](https://github.com/RougeWare/Swift-Lazy-Patterns/issues/8)); it was almost entirely to service Swift Package manager.
