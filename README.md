@@ -16,7 +16,7 @@ A few ways to have a lazily-initialized value in Swift 5.1. Note that, if you ar
 
 # Automatic Conformance #
 
-The built-in containers (`Lazy`, `ResettableLazy`, and `FunctionalLazy`) automatically conform to `Equatable` when their values conform do too!
+The built-in containers (`Lazy`, `ResettableLazy`, and `FunctionalLazy`) automatically conform to `Equatable` and `Hashable` when their values conform do too!
 
 Keep in mind, though, that in order to do this, the value is automatically initialized and accessed!
 
