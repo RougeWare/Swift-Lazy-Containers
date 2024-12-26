@@ -2,17 +2,19 @@
 //  LazyContainer + Hashable tests.swift
 //  
 //
-//  Created by S🌟System on 2022-06-03.
+//  Created by Ky on 2022-06-03.
 //
 
-import XCTest
+import Foundation
+import Testing
 
-import LazyContainers
+import Lazy
 
 
 
-final class LazyContainer_Hashable_tests: XCTestCase {
+struct LazyContainer_Hashable_tests {
 
+    @Test
     func testHashableConformance() {
         
         struct Test: Hashable {
@@ -27,6 +29,6 @@ final class LazyContainer_Hashable_tests: XCTestCase {
             var lazyString
         }
         
-        XCTAssertEqual(Test().hashValue, Test().hashValue)
+        #expect(Test().hashValue == Test().hashValue)
     }
 }

@@ -2,25 +2,23 @@
 //  LazyContainersTests.swift
 //  LazyContainersTests
 //
-//  Created by Ben Leggiero on 2019-08-19
-//  Copyright Ben Leggiero © 2020
+//  Created by Ky on 2019-08-19
+//  Copyright waived. No rights reserved.
 //  https://github.com/RougeWare/Swift-Lazy-Patterns/blob/master/LICENSE.txt
 //
 
-
-
-import XCTest
-@testable import LazyContainers
+import Testing
+import Lazy
 
 
 
-var sideEffectA: String?
+nonisolated(unsafe) var sideEffectA: String?
 func makeLazyA() -> String {
     sideEffectA = "Side effect A1"
     return "lAzy"
 }
 
-var sideEffectB: String?
+nonisolated(unsafe) var sideEffectB: String?
 func makeLazyB() -> String {
     sideEffectB = "Side effect B"
     return "Lazy B (this time with side-effects)"
@@ -28,12 +26,11 @@ func makeLazyB() -> String {
 
 
 
-final class LazyContainersTests: XCTestCase {
+@Suite(.serialized)
+struct LazyContainersTests {
     
-    #if swift(>=5.3)
     @Lazy(initializer: makeLazyA)
     var lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect: String
-    #endif
     
     var lazyInitTraditionally = Lazy<String>() {
         sideEffectA = "Side effect A2"
@@ -51,58 +48,54 @@ final class LazyContainersTests: XCTestCase {
     var functionalLazyInitTraditionally = FunctionalLazy(wrappedValue: "lazy F")
     
 
-    override func setUp() {
+    init() {
         sideEffectA = nil
         sideEffectB = nil
-    }
-    
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
     
     
     // MARK: - `Lazy`
     
-    #if swift(>=5.3)
-    func testLazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect() {
-        XCTAssertEqual(sideEffectA, nil)
-        XCTAssertFalse(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, nil)
-        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertEqual("lAzy", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
+    @Test
+    mutating func testLazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect() {
+        #expect(sideEffectA == nil)
+        #expect(false == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == nil)
+        #expect("lAzy" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("lAzy" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("lAzy" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
         
         lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect = "MAnual"
         
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertEqual("MAnual", lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
-        XCTAssertTrue(_lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
-        XCTAssertEqual(sideEffectA, "Side effect A1")
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("MAnual" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("MAnual" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("MAnual" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
     }
     
     
+    @Test
     func testLazyInitWithPropertyWrapperAndSideEffect() {
         
         struct Test {
@@ -113,193 +106,153 @@ final class LazyContainersTests: XCTestCase {
         
         let test = Test()
         
-        XCTAssertNil(sideEffectB, "@Lazy eagerly evaluated its initial value")
-        XCTAssertEqual(test.lazyInitWithPropertyWrapperAndSideEffect, "Lazy B (this time with side-effects)")
+        #expect(nil == sideEffectB, "@Lazy eagerly evaluated its initial value")
+        #expect(test.lazyInitWithPropertyWrapperAndSideEffect == "Lazy B (this time with side-effects)")
     }
-    #endif
     
     
-    func testLazyInitTraditionally() {
-        XCTAssertFalse(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy B", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+    @Test
+    mutating func testLazyInitTraditionally() {
+        #expect(false == lazyInitTraditionally.isInitialized)
+        #expect("lazy B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("lazy B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("lazy B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
         
         lazyInitTraditionally.wrappedValue = "Manual B"
         
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
         
-        lazyInitTraditionally.value = "Manual B2"
+        lazyInitTraditionally.wrappedValue = "Manual B2"
         
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B2", lazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual B2", lazyInitTraditionally.value)
-        XCTAssertTrue(lazyInitTraditionally.isInitialized)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B2" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B2" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B2" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
     }
     
     
     
     // MARK: - `ResettableLazy`
     
-    func testResettableLazyInitWithPropertyWrapper() {
-        XCTAssertFalse(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
+    @Test
+    mutating func testResettableLazyInitWithPropertyWrapper() {
+        #expect(false == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
         
         resettableLazyInitWithPropertyWrapper = "Manual C"
         
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("Manual C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("Manual C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("Manual C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
         
         _resettableLazyInitWithPropertyWrapper.clear()
         
-        XCTAssertFalse(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy C", resettableLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect(false == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
     }
     
     
-    func testResettableLazyInitTraditionally() {
-        XCTAssertFalse(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
+    @Test
+    mutating func testResettableLazyInitTraditionally() {
+        #expect(false == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
         
         resettableLazyInitTraditionally.wrappedValue = "Manual D"
         
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("Manual D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("Manual D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("Manual D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
         
         resettableLazyInitTraditionally.clear()
         
-        XCTAssertFalse(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy D", resettableLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(resettableLazyInitTraditionally.isInitialized)
+        #expect(false == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
     }
     
     
     
     // MARK: - `FuctionalLazy`
     
-    func testFunctionalLazyInitWithPropertyWrapper() {
-        XCTAssertFalse(_functionalLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy E", functionalLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_functionalLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy E", functionalLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_functionalLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("lazy E", functionalLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_functionalLazyInitWithPropertyWrapper.isInitialized)
+    @Test
+    mutating func testFunctionalLazyInitWithPropertyWrapper() {
+        #expect(false == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
         
         functionalLazyInitWithPropertyWrapper = "Manual E"
         
-        XCTAssertTrue(_functionalLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("Manual E", functionalLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_functionalLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("Manual E", functionalLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_functionalLazyInitWithPropertyWrapper.isInitialized)
-        XCTAssertEqual("Manual E", functionalLazyInitWithPropertyWrapper)
-        XCTAssertTrue(_functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
     }
     
     
-    func testFunctionalLazyInitTraditionally() {
-        XCTAssertFalse(functionalLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy F", functionalLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy F", functionalLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("lazy F", functionalLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
+    @Test
+    mutating func testFunctionalLazyInitTraditionally() {
+        #expect(false == functionalLazyInitTraditionally.isInitialized)
+        #expect("lazy F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("lazy F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("lazy F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
         
         functionalLazyInitTraditionally.wrappedValue = "Manual F"
         
-        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
-        XCTAssertEqual("Manual F", functionalLazyInitTraditionally.wrappedValue)
-        XCTAssertTrue(functionalLazyInitTraditionally.isInitialized)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("Manual F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("Manual F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("Manual F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
     }
-    
-    #if swift(>=5.3)
-    static let testsWhichRequireSwift5_3 = [
-        ("testLazyInitWithPropertyWrapperWithCustomInitializerAndSideEffect", testLazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect),
-        ("testLazyInitWithPropertyWrapperAndSideEffect", testLazyInitWithPropertyWrapperAndSideEffect),
-    ]
-    #endif
-    
-    
-    static let testsWhichWorkBeforeSwift5_3 = [
-        ("testLazyInitTraditionally", testLazyInitTraditionally),
-        
-        ("testResettableLazyInitWithPropertyWrapper", testResettableLazyInitWithPropertyWrapper),
-        ("testResettableLazyInitTraditionally", testResettableLazyInitTraditionally),
-        
-        ("testFunctionalLazyInitWithPropertyWrapper", testFunctionalLazyInitWithPropertyWrapper),
-        ("testFunctionalLazyInitTraditionally", testFunctionalLazyInitTraditionally),
-    ]
-    
-    
-    #if swift(>=5.3)
-    static let allTests = testsWhichRequireSwift5_3 + testsWhichWorkBeforeSwift5_3
-    #else
-    @inline(__always)
-    static let allTests = testsWhichWorkBeforeSwift5_3
-    #endif
 }

@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -7,32 +7,22 @@ let package = Package(
     name: "LazyContainers",
     
     products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "LazyContainers",
-            targets: ["LazyContainers"]),
-        
+            targets: ["Lazy"]),
         .library(
-            name: "LazyContainers_dynamic",
-            type: .dynamic,
-            targets: ["LazyContainers"]),
-    ],
-    
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+            name: "Lazy",
+            targets: ["Lazy"]),
     ],
     
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "LazyContainers",
+            name: "Lazy",
             dependencies: []),
         .testTarget(
-            name: "LazyContainersTests",
-            dependencies: ["LazyContainers"]),
+            name: "LazyTests",
+            dependencies: ["Lazy"]),
     ],
     
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v6]
 )

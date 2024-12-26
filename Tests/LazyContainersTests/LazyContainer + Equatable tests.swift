@@ -2,17 +2,19 @@
 //  LazyContainer + Equatable tests.swift
 //  
 //
-//  Created by S🌟System on 2022-06-03.
+//  Created by Ky on 2022-06-03.
 //
 
-import XCTest
+import Foundation
+import Testing
 
-import LazyContainers
+import Lazy
 
 
 
-final class LazyContainer_Equatable_tests: XCTestCase {
+struct LazyContainer_Equatable_tests {
 
+    @Test
     func testEquatableConformance() {
         
         struct Test: Equatable {
@@ -27,6 +29,6 @@ final class LazyContainer_Equatable_tests: XCTestCase {
             var lazyString
         }
         
-        XCTAssertEqual(Test(), Test())
+        #expect(Test() == Test())
     }
 }

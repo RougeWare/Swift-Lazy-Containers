@@ -5,8 +5,10 @@
 
 
 
-# [Swift Lazy Containers](https://github.com/RougeWare/Swift-Lazy-Patterns) #
-A few ways to have a lazily-initialized value in Swift 5.1. Note that, if you are OK with the behavior of Swift's `lazy` keyword, you should use that. This is for [those who want very specific behaviors](https://stackoverflow.com/a/40847994/3939277):
+# Advanced [Lazy](https://github.com/RougeWare/Swift-Lazy-Containers) Behavior for Swift
+A few ways to have a lazily-initialized value in Swift 6. 
+
+**Important:** If you are OK with the behavior of Swift's `lazy` keyword, you should **use that**. This is for [those who want very specific behaviors](https://stackoverflow.com/a/40847994/3939277):
 
  * [`Lazy`](https://github.com/RougeWare/Swift-Lazy-Patterns/blob/master/Sources/LazyContainers/LazyContainers.swift#L184-L248): A non-resettable lazy pattern, to guarantee lazy behavior across Swift language versions
  * [`ResettableLazy`](https://github.com/RougeWare/Swift-Lazy-Patterns/blob/master/Sources/LazyContainers/LazyContainers.swift#L252-L330): A resettable lazy pattern, whose value is generated and cached only when first needed, and can be destroyed when no longer needed.
@@ -18,15 +20,7 @@ A few ways to have a lazily-initialized value in Swift 5.1. Note that, if you ar
 
 The built-in containers (`Lazy`, `ResettableLazy`, and `FunctionalLazy`) automatically conform to `Equatable`, `Hashable`, `Encodable`, and `Decodable` when their values conform do too! This is a passthrough conformance, simply calling the functions of the wrapped value.
 
-Keep in mind, though, that in order to do this, the value is automatically initialized and accessed!
-
-
-
-# Compatibility Notice #
-
-The entire repository structure had to be changed in order to be compatible with Swift Package Manager ([#4](https://github.com/RougeWare/Swift-Lazy-Patterns/issues/4)). Because of this, the API version changed from 2.0.0 to 3.0.0. Very little of the actual API changed along with this ([#8](https://github.com/RougeWare/Swift-Lazy-Patterns/issues/8)); it was almost entirely to service Swift Package manager.
-
-In version 2.0.0, [this readme recommended](https://github.com/RougeWare/Swift-Lazy-Patterns/commit/68fd42023fe5642dd9841ea1411027f6cbc1032f#diff-04c6e90faac2675aa89e2176d2eec7d8) that you change any reference to `./Lazy.swift` to `./LazyContainers/Sources/LazyContainers/LazyContainers.swift`. Unfortunately, that wasn't compatible with Swift Package Manager, so `./Lazy.swift` was changed to `./Sources/LazyContainers/LazyContainers.swift`. Because of this, please change any reference to `./LazyContainers/Sources/LazyContainers/LazyContainers.swift` to `./Sources/LazyContainers/LazyContainers.swift`. Sorry about that 🤷🏽‍
+Keep in mind, though, that in order to do this, the value is automatically initialized and accessed! 
 
 
 
@@ -210,3 +204,24 @@ Hello, lazy!
 ## `FunctionalLazy` ##
 
 This is functionally <sub>(ha!)</sub> the same as `Lazy`. The only difference is I thought it'd be fun to implement it with functions instead of enums. 🤓
+
+
+
+# Compatibility Notice #
+
+Version 6 has notble compatibility changes, noted in [the changelog](./CHANGELOG.md), including:
+
+- Changed the library name from `LazyContainers` to `Lazy`
+- Removed CocoaPods support
+- Removed support for direct-consumption of the `LazyContainers.swift` file
+- Changed license to be as permissible as possible
+
+For a full list of changes and reasoning/notes, see [CHANGELOG.md](./CHANGELOG.md)
+
+
+
+## The old name is deprecated
+
+If you are upgrading to version 6 of this package or newer, then you are encouraged to change all uses of `LazyContainers` to `Lazy`. In your package dependencies, Xcode project file, imports, etc.
+
+`LazyContainers` is still provided to ease this, but will be removed in a future version.

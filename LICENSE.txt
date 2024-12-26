@@ -1,9 +1,5 @@
-This repository uses multiple licenses. To determine which license is
-appropriate, use the following guidance:
+Copyright waived in 2024 by the author, Ky
 
-1. The following entities may use the license provided in the
-   LICENSE-SPECIAL.txt file in this repository:
-  a. PKWARE, Inc.
+Usage of the works is permitted provided that this instrument is retained with the works, so that any entity that uses the works is notified of this instrument.
 
-2. All other entities must use the license provided in the LICENSE-GENERAL.txt
-   file in this repository.
+DISCLAIMER: THE WORKS ARE WITHOUT WARRANTY.

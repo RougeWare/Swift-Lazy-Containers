@@ -5,13 +5,13 @@
 //  Created by Gabe Shahbazian on 2020-07-29.
 //
 
-import XCTest
-@testable import LazyContainers
+import Testing
+
+import Lazy
 
 
 
-#if swift(>=5.3)
-var shouldNotRun = false
+nonisolated(unsafe) var shouldNotRun = false
 
 class ShouldNotInit {
     init() {
@@ -23,17 +23,14 @@ class ShouldNotInit {
 
 /// Guards against issue #20
 /// https://github.com/RougeWare/Swift-Lazy-Patterns/issues/20
-final class GitHubIssue20Tests: XCTestCase {
+@Suite(.serialized)
+struct GitHubIssue20Tests {
     
     @Lazy
     var lazyShouldNotRun = ShouldNotInit()
     
-    func testLazyInitWithPropertyWrapper() {
-        XCTAssertFalse(shouldNotRun)
+    @Test
+    func testLazyInitWithPropertyWrapper() async throws {
+        #expect(false == shouldNotRun)
     }
-    
-    static var allTests = [
-        ("testLazyInitWithPropertyWrapper", testLazyInitWithPropertyWrapper)
-    ]
 }
-#endif
