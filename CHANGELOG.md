@@ -42,3 +42,6 @@ Initial movement from 4.x.
 
 - Transitioned to Swift Testing
     - Removed `LinuxMain.swift` & `XCTestManifests.swift` from tests since they're no longer needed
+
+- Introduced `.initializeNow()`
+    - https://github.com/RougeWare/Swift-Lazy-Containers/issues/40

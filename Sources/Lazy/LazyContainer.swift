@@ -34,6 +34,13 @@ public protocol LazyContainer {
     var isInitialized: Bool { get }
     
     
+    /// Immediately initializes the value held inside this lazy container
+    ///
+    /// If this holder already contains a value, this does nothing
+    // https://github.com/RougeWare/Swift-Lazy-Containers/issues/40
+    mutating func initializeNow()
+    
+    
     /// Creates a lazy container that already contains an initialized value.
     ///
     /// This is useful when you need a uniform API (for instance, when implementing a protocol that requires a `Lazy`),
@@ -68,7 +75,5 @@ public final class LazyContainerValueReference<Value> {
 public extension LazyContainer {
     
     /// Allows you to use reference semantics to hold a value inside a lazy container.
-    ///
-    /// - Attention: This will change in version 5, to be an alias to `LazyContainerValueReference<Value>`
     typealias ValueReference = LazyContainerValueReference
 }

@@ -19,11 +19,11 @@ public struct Lazy<Value>: LazyContainer {
     
     /// Privatizes the inner-workings of this functional lazy container
     @ValueReference
-    private var guts: ValueHolder<Value>
+    private var guts: ValueHolder
     
     
     /// Allows other initializers to have a shared point of initialization
-    private init(_guts: ValueReference<ValueHolder<Value>>) {
+    private init(_guts: ValueReference<ValueHolder>) {
         self._guts = _guts
     }
     
@@ -73,6 +73,11 @@ public struct Lazy<Value>: LazyContainer {
     
     /// Indicates whether the value has indeed been initialized
     public var isInitialized: Bool { _guts.wrappedValue.hasValue }
+    
+    
+    public mutating func initializeNow() {
+        guts.initializeNow()
+    }
 }
 
 
@@ -120,6 +125,18 @@ public enum LazyContainerValueHolder<Value> {
         case .unset(initializer: _): return false
         }
     }
+    
+    
+    /// Immediately initializes the value held inside this value holder
+    ///
+    /// If this holder already contains a value, this does nothing
+    mutating func initializeNow()  {
+        switch self {
+        case .hasValue(_): return
+        case .unset(let initializer):
+            self = .hasValue(value: initializer())
+        }
+    }
 }
 
 
@@ -128,7 +145,5 @@ public enum LazyContainerValueHolder<Value> {
 public extension LazyContainer {
     
     /// Takes care of keeping track of the state, value, and initializer as needed
-    ///
-    /// - Attention: This will change in version 5, to be an alias to `LazyContainerValueHolder<Value>`
-    typealias ValueHolder = LazyContainerValueHolder
+    typealias ValueHolder = LazyContainerValueHolder<Value>
 }

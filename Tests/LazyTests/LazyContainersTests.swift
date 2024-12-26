@@ -144,6 +144,66 @@ struct LazyContainersTests {
     
     
     
+    // MARK: .initializeNow()
+    
+    // https://github.com/RougeWare/Swift-Lazy-Containers/issues/40
+    
+    @Test
+    mutating func initializeNow_Lazy_traditional() {
+        #expect(false == lazyInitTraditionally.isInitialized)
+        lazyInitTraditionally.initializeNow()
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("lazy B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("lazy B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        
+        lazyInitTraditionally.wrappedValue = "Manual B"
+        
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+        #expect("Manual B" == lazyInitTraditionally.wrappedValue)
+        #expect(true == lazyInitTraditionally.isInitialized)
+    }
+    
+    
+    @Test
+    mutating func initializeNow_Lazy_customInitWithSideEffect() {
+        #expect(sideEffectA == nil)
+        #expect(false == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == nil)
+        _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.initializeNow()
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("lAzy" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("lAzy" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        
+        lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect = "MAnual"
+        
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("MAnual" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+        #expect("MAnual" == lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect)
+        #expect(sideEffectA == "Side effect A1")
+        #expect(true == _lazyInitWithPropertyWrapperAndCustomInitializerWithSideEffect.isInitialized)
+        #expect(sideEffectA == "Side effect A1")
+    }
+    
+    
+    
     // MARK: - `ResettableLazy`
     
     @Test
@@ -209,6 +269,73 @@ struct LazyContainersTests {
         #expect(true == resettableLazyInitTraditionally.isInitialized)
     }
     
+    // MARK: .initializeNow()
+    
+    // https://github.com/RougeWare/Swift-Lazy-Containers/issues/40
+    
+    @Test
+    mutating func initializeNow_ResettableLazy_propertyWrapper() {
+        #expect(false == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        _resettableLazyInitWithPropertyWrapper.initializeNow()
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        
+        resettableLazyInitWithPropertyWrapper = "Manual C"
+        
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        
+        _resettableLazyInitWithPropertyWrapper.clear()
+        
+        #expect(false == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy C" == resettableLazyInitWithPropertyWrapper)
+        #expect(true == _resettableLazyInitWithPropertyWrapper.isInitialized)
+    }
+    
+    
+    @Test
+    mutating func initializeNow_ResettableLazy_traditional() {
+        #expect(false == resettableLazyInitTraditionally.isInitialized)
+        resettableLazyInitTraditionally.initializeNow()
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        
+        resettableLazyInitTraditionally.wrappedValue = "Manual D"
+        
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("Manual D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("Manual D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("Manual D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        
+        resettableLazyInitTraditionally.clear()
+        
+        #expect(false == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+        #expect("lazy D" == resettableLazyInitTraditionally.wrappedValue)
+        #expect(true == resettableLazyInitTraditionally.isInitialized)
+    }
+    
     
     
     // MARK: - `FuctionalLazy`
@@ -239,6 +366,54 @@ struct LazyContainersTests {
     mutating func testFunctionalLazyInitTraditionally() {
         #expect(false == functionalLazyInitTraditionally.isInitialized)
         #expect("lazy F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("lazy F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("lazy F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        
+        functionalLazyInitTraditionally.wrappedValue = "Manual F"
+        
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("Manual F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("Manual F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+        #expect("Manual F" == functionalLazyInitTraditionally.wrappedValue)
+        #expect(true == functionalLazyInitTraditionally.isInitialized)
+    }
+    
+    
+    // MARK: .initializeNow()
+    
+    // https://github.com/RougeWare/Swift-Lazy-Containers/issues/40
+    
+    @Test
+    mutating func initializeNow_FunctionalLazy_propertyWrapper() {
+        #expect(false == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        _functionalLazyInitWithPropertyWrapper.initializeNow()
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("lazy E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        
+        functionalLazyInitWithPropertyWrapper = "Manual E"
+        
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+        #expect("Manual E" == functionalLazyInitWithPropertyWrapper)
+        #expect(true == _functionalLazyInitWithPropertyWrapper.isInitialized)
+    }
+    
+    
+    @Test
+    mutating func initializeNow_FunctionalLazy_traditional() {
+        #expect(false == functionalLazyInitTraditionally.isInitialized)
+        functionalLazyInitTraditionally.initializeNow()
         #expect(true == functionalLazyInitTraditionally.isInitialized)
         #expect("lazy F" == functionalLazyInitTraditionally.wrappedValue)
         #expect(true == functionalLazyInitTraditionally.isInitialized)

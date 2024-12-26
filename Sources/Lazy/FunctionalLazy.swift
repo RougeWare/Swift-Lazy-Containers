@@ -73,6 +73,11 @@ public struct FunctionalLazy<Value>: LazyContainer {
     public var isInitialized: Bool { _guts.isInitialized }
     
     
+    public mutating func initializeNow() {
+        _guts.initializeNow()
+    }
+    
+    
     
     /// The actual functionality of `FunctionalLazy`, separated so that the semantics work out better
     @propertyWrapper
@@ -112,6 +117,11 @@ public struct FunctionalLazy<Value>: LazyContainer {
         var wrappedValue: Value {
             get { initializer() }
             set { initializer = { newValue } }
+        }
+        
+        
+        func initializeNow() {
+            _ = initializer()
         }
         
 
