@@ -9,7 +9,7 @@ import Foundation
 
 
 
-public extension LazyContainer where Self: Hashable, Value: Hashable {
+public extension LazyProtocol where Self: Hashable, Value: Hashable {
     func hash(into hasher: inout Hasher) {
         wrappedValue.hash(into: &hasher)
     }

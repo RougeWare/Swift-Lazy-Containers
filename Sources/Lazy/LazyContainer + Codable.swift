@@ -11,7 +11,7 @@ import Foundation
 
 // MARK: - Encodable
 
-public extension LazyContainer where Self: Encodable, Value: Encodable {
+public extension LazyProtocol where Self: Encodable, Value: Encodable {
     func encode(to encoder: Encoder) throws {
         try wrappedValue.encode(to: encoder)
     }
@@ -27,7 +27,7 @@ extension FunctionalLazy: Encodable where Value: Encodable {}
 
 // MARK: - Decodable
 
-public extension LazyContainer where Self: Decodable, Value: Decodable {
+public extension LazyProtocol where Self: Decodable, Value: Decodable {
     init(from decoder: Decoder) throws {
         self = .preinitialized(try Value(from: decoder))
     }

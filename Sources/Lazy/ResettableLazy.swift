@@ -16,7 +16,7 @@ import Foundation
 /// - Attention: Because of the extra logic and memory required for this behavior, it's recommended that you use `Lazy`
 ///              or the language's built-in `lazy` instead wherever possible.
 @propertyWrapper
-public struct ResettableLazy<Value>: LazyContainer {
+public struct ResettableLazy<Value>: LazyProtocol {
     
     /// Privatizes the inner-workings of this functional lazy container
     @ValueReference
@@ -170,7 +170,7 @@ public enum LazyContainerResettableValueHolder<Value> {
 
 
 
-public extension LazyContainer {
+public extension AnyLazy {
     
     /// Takes care of keeping track of the state, value, and initializer as needed
     typealias ResettableValueHolder = LazyContainerResettableValueHolder<Value>

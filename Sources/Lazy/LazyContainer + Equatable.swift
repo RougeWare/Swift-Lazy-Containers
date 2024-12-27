@@ -9,7 +9,7 @@ import Foundation
 
 
 
-public extension LazyContainer where Self: Equatable, Value: Equatable {
+public extension LazyProtocol where Self: Equatable, Value: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.wrappedValue == rhs.wrappedValue
     }

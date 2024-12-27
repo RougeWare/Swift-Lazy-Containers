@@ -15,7 +15,7 @@ import Foundation
 /// - Attention: This is theoretically thread-safe, but hasn't undergone rigorous real-world testing. A short-lived
 ///              semaphore was added to mitigate this, but again, it hasn't undergone rigorous real-world testing.
 @propertyWrapper
-public struct FunctionalLazy<Value>: LazyContainer {
+public struct FunctionalLazy<Value>: LazyProtocol {
     
     /// Privatizes the inner-workings of this functional lazy container
     @Guts

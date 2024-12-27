@@ -9,9 +9,15 @@ import Foundation
 
 
 
-/// The name which was used for `LazyContainer` in version `1.x` of this API. Included for transition smoothness.
-@available(*, unavailable, renamed: "LazyContainer")
-public typealias LazyPattern = LazyContainer
+/// The name which was used for `LazyProtocol` prior to version `6.x` of this package. Included for transition smoothness.
+@available(*, deprecated, renamed: "LazyProtocol")
+public typealias LazyContainer = LazyProtocol
+
+
+
+/// The name which was used for `LazyContainer` in version `1.x` of this package. Included for transition smoothness.
+@available(*, unavailable, renamed: "LazyProtocol")
+public typealias LazyPattern = LazyProtocol
 
 
 

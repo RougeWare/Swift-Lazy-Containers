@@ -23,6 +23,9 @@ Initial movement from 4.x.
     - This should also help with SEO and intuition. `import Lazy` makes more sense when you want to import lazy behavior, compared to `import LazyContainers`
     - 6.x will still ship a product named `LazyContainers` for transitionary purposes, but it's deprecated and discoruaged. The `LazyContainers` product will be exactly the same as `Lazy` until it is removed in a future version.
 
+- Renaming the `LazyContainer` protocol to `LazyProtocol`
+    - Included a migration-assistant typealias to facilitate the transition
+
 - Full migration to Swift Package Manager
     - It's now clear that SPM is the best way to distribute & use Swift packages, so this update removes CocoaPods support and no longer considers any other way of importing this package.
 

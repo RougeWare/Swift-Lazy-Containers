@@ -1,5 +1,5 @@
 //
-//  LazyContainer.swift
+//  LazyProtocol.swift
 //  https://github.com/RougeWare/Swift-Lazy-Containers
 //
 //  Created by Ky on 2024-12-26.
@@ -17,11 +17,10 @@ public typealias Initializer<Value> = () -> Value
 
 
 
+// MARK: -
+
 /// Defines how a lazy container should look
-public protocol LazyContainer {
-    
-    /// The type of the value that will be lazily-initialized
-    associatedtype Value
+public protocol LazyProtocol: AsyncLazyProtocol {
     
     /// Gets the value, possibly initializing it first
     var wrappedValue: Value {
@@ -52,6 +51,15 @@ public protocol LazyContainer {
 
 
 
+public extension LazyProtocol {
+    @available(*, deprecated, message: "This is not required for non-Async `LazyContainer`s")
+    mutating func set(to newValue: Value) {
+        wrappedValue = newValue
+    }
+}
+
+
+
 // MARK: - ValueReference
 
 /// Allows you to use reference-semantics to hold a value inside a lazy container
@@ -72,7 +80,7 @@ public final class LazyContainerValueReference<Value> {
 
 
 
-public extension LazyContainer {
+public extension AnyLazy {
     
     /// Allows you to use reference semantics to hold a value inside a lazy container.
     typealias ValueReference = LazyContainerValueReference

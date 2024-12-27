@@ -15,7 +15,7 @@ import Foundation
 /// - Attention: Because of the extra logic and memory required for this behavior, it's recommended that you use the
 ///              language's built-in `lazy` instead wherever possible.
 @propertyWrapper
-public struct Lazy<Value>: LazyContainer {
+public struct Lazy<Value>: LazyProtocol {
     
     /// Privatizes the inner-workings of this functional lazy container
     @ValueReference
@@ -142,7 +142,7 @@ public enum LazyContainerValueHolder<Value> {
 
 
 
-public extension LazyContainer {
+public extension AnyLazy {
     
     /// Takes care of keeping track of the state, value, and initializer as needed
     typealias ValueHolder = LazyContainerValueHolder<Value>
